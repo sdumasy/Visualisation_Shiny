@@ -1,0 +1,29 @@
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+}
+#main {
+  height: 100vh;
+}
+#main .row:first-child {
+  height: 60%;
+}
+#main .row:first-child .col-sm-12,  #map{
+  height: 100% !important;
+}
+
+#abpanel {
+  width: 100% !important;
+  margin-left: 10%;
+  margin-right: 10%;
+  margin-top: -100px;
+}
+
+.container-fluid {
+  padding: 0px !important;
+}
+
+#control {
+  height: 40%;
+  margin-bottom: 0px;
+}

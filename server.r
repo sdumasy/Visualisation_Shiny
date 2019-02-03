@@ -80,8 +80,8 @@ change_year_redraw_world <- function(map, year, data, colors, gray_colors, title
 create_data <- function() {
     birth_data <- read.csv(skip = 3, "Data/birth.csv")
     death_data <- read.csv(skip = 3, "Data/death.csv")
-    birth_data <- subset(birth_data, select = -c(X, X2017, X2016))
-    death_data <- subset(death_data, select = -c(X, X2017, X2016))
+    birth_data <- subset(birth_data, select = -c(X, X2017))
+    death_data <- subset(death_data, select = -c(X, X2017))
     
     names(birth_data) <- gsub(x = names(birth_data), pattern = "X", replacement = "")  
     names(death_data) <- gsub(x = names(death_data), pattern = "X", replacement = "")  
@@ -117,7 +117,7 @@ draw_plots <- function(data, raw_data, output) {
         
         output$plot = renderPlotly({
 
-          filter_countries <- raw_data %>% filter(Country.Code %in% selected_countries) %>% select(num_range("", 1960:2015))
+          filter_countries <- raw_data %>% filter(Country.Code %in% selected_countries) %>% select(num_range("", 1960:2016))
           
           filter_countries_long <- data.frame()
             
@@ -125,7 +125,7 @@ draw_plots <- function(data, raw_data, output) {
             print(length(selected_countries))
 
             name <- subset(raw_data, Country.Code == selected_countries[i], select= Country.Name)
-            filter_countries_long2 <- gather(filter_countries[i,], year, var, '1960':'2015')
+            filter_countries_long2 <- gather(filter_countries[i,], year, var, '1960':'2016')
             names(filter_countries_long2)[names(filter_countries_long2) == "var"] <- as.character(name[1,1])
             print(filter_countries_long2)
             
@@ -153,7 +153,7 @@ draw_plots <- function(data, raw_data, output) {
            df <- data.frame(x = year, y = values)
            ggplot(df, aes(x,y)) +
            geom_line(aes(colour = colour), group = 1) +
-           scale_x_discrete(breaks = seq(1950, 2015, by = 5)) +
+           scale_x_discrete(breaks = seq(1950, 2016, by = 5)) +
              labs (x = "Year", y = plot_y_titles[[display_mode]], title = plot_titles[[display_mode]]) +
                 theme(
                   legend.title = element_blank(),
@@ -167,7 +167,7 @@ draw_plots <- function(data, raw_data, output) {
            
          } else {
            data_long <- raw_data %>% filter(Country.Code %in% selected_countries) 
-           data_long <- gather(data_long, year, value, "1960":"2015")
+           data_long <- gather(data_long, year, value, "1960":"2016")
            df2 <- data.frame(x=data_long$Country.Name, y = data_long$value)
            
          ggplot(df2, aes(x,y)) +
@@ -195,7 +195,7 @@ shinyServer(
   function(input, output) {
     display_mode <<- 1
     plot_mode <<- 1
-    current_year <<- 2015
+    current_year <<- 2016
     
     selected_countries <<- character()
   
@@ -206,7 +206,7 @@ shinyServer(
     
     titles <<- list("Birth in", "Death in", "Growth in")
     plot_titles <<- list("Amount of births over time per 1000 people", "Amount of deaths over time per 1000 people", "Amount of growth over time per 1000 people")
-    box_titles <<- list("Amount of births over time per 1000 people between 1960-2015", "Amount of deaths over time per 1000 people between 1960-2015", "Amount of growth over time per 1000 people between 1950-2015")
+    box_titles <<- list("Amount of births over time per 1000 people between 1960-2016", "Amount of deaths over time per 1000 people between 1960-2016", "Amount of growth over time per 1000 people between 1950-2016")
     plot_y_titles <<- list("Births per 1000 people", "Deaths per 1000 people", "Growth per 1000 people")
     
     

@@ -9,7 +9,7 @@ shinyUI(
     fluidRow(
       column(width = 12, leafletOutput("map"),
         absolutePanel(id = "abpanel",
-          sliderInput('yearslide','Please select the year to visualise the colors on the map', width = '80%', min = 1960, max = 2015, value = 2015)
+          sliderInput('yearslide','Please select the year to visualise the colors on the map', width = '80%', min = 1960, max = 2016, value = 2016)
         )
       )
     ),
